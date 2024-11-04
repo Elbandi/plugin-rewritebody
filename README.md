@@ -35,7 +35,7 @@ pilot:
 experimental:
     plugins:
         rewrite-body:
-            moduleName: "github.com/packruler/rewrite-body"
+            moduleName: "github.com/traefik/plugin-rewritebody"
             version: "v1.1.0"
 ```
 

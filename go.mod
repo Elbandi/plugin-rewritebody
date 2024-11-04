@@ -1,3 +1,3 @@
-module github.com/packruler/rewrite-body
+module github.com/traefik/plugin-rewritebody
 
 go 1.16

@@ -9,8 +9,8 @@ import (
 	"net/http"
 	"regexp"
 
-	"github.com/packruler/rewrite-body/httputil"
-	"github.com/packruler/rewrite-body/logger"
+	"github.com/traefik/plugin-rewritebody/httputil"
+	"github.com/traefik/plugin-rewritebody/logger"
 )
 
 type rewriteBody struct {

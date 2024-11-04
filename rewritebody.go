@@ -1,11 +1,11 @@
-// Package rewrite_body a plugin to rewrite response body.
-package rewrite_body
+// Package plugin_rewritebody a plugin to rewrite response body.
+package plugin_rewritebody
 
 import (
 	"context"
 	"net/http"
 
-	"github.com/packruler/rewrite-body/handler"
+	"github.com/traefik/plugin-rewritebody/handler"
 )
 
 // CreateConfig creates and initializes the plugin configuration.
