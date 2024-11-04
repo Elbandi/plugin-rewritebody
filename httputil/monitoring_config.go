@@ -8,8 +8,27 @@ import (
 // MonitoringConfig structure of data for handling configuration for
 // controlling what content is monitored.
 type MonitoringConfig struct {
-	Types   []string `json:"types,omitempty" yaml:"types,omitempty" toml:"types,omitempty" export:"true"`
-	Methods []string `json:"methods,omitempty" yaml:"methods,omitempty" toml:"methods,omitempty" export:"true"`
+	Types                []string `export:"true"   json:"types,omitempty"   toml:"types,omitempty"      yaml:"types,omitempty"`
+	Methods              []string `export:"true"   json:"methods,omitempty" toml:"methods,omitempty"    yaml:"methods,omitempty"`
+	CheckMimeAccept      bool     `default:"false" export:"true"            json:"checkMimeAccept"      toml:"checkMimeAccept"      yaml:"checkMimeAccept"`
+	CheckMimeContentType bool     `default:"true"  export:"true"            json:"checkMimeContentType" toml:"checkMimeContentType" yaml:"checkMimeContentType"`
+	CheckAcceptEncoding  bool     `default:"true"  export:"true"            json:"checkAcceptEncoding"  toml:"checkAcceptEncoding"  yaml:"checkAcceptEncoding"`
+	CheckContentEncoding bool     `default:"true"  export:"true"            json:"checkContentEncoding" toml:"checkContentEncoding" yaml:"checkContentEncoding"`
+}
+
+// CreateMonitoringConfig creates and initializes the monitoring configuration.
+func CreateMonitoringConfig() *MonitoringConfig {
+	config := MonitoringConfig{
+		Types:                nil,
+		Methods:              nil,
+		CheckMimeAccept:      true,
+		CheckMimeContentType: true,
+		CheckAcceptEncoding:  true,
+		CheckContentEncoding: true,
+	}
+	config.EnsureDefaults()
+
+	return &config
 }
 
 // EnsureDefaults check Types and Methods for empty arrays and apply default values if found.

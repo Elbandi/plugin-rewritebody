@@ -25,6 +25,10 @@ func TestEncode(t *testing.T) {
 			31, 139, 8, 0, 0, 0, 0, 0, 0, 255, 74, 203, 207, 87, 200, 44, 86, 40, 201, 72, 85,
 			200, 75, 45, 87, 72, 74, 44, 2, 4, 0, 0, 255, 255, 251, 28, 166, 187, 18, 0, 0, 0,
 		}
+		bredBytes = []byte{
+			139, 8, 128, 102, 111, 111, 32, 105, 115, 32, 116,
+			104, 101, 32, 110, 101, 119, 32, 98, 97, 114, 3,
+		}
 		normalBytes = []byte("foo is the new bar")
 	)
 
@@ -51,11 +55,11 @@ func TestEncode(t *testing.T) {
 			shouldMatch: false,
 		},
 		{
-			desc:        "should NOT support brotli",
+			desc:        "should support brotli",
 			input:       normalBytes,
-			expected:    normalBytes,
-			encoding:    "br",
-			shouldMatch: true,
+			expected:    bredBytes,
+			encoding:    compressutil.Brotli,
+			shouldMatch: false,
 		},
 	}
 
@@ -77,6 +81,7 @@ func TestEncode(t *testing.T) {
 			} else {
 				isBad = bytes.Equal(test.input, output)
 			}
+
 			if isBad {
 				t.Errorf("match error got body: %v\n wanted: %v", output, test.input)
 			}
@@ -93,6 +98,10 @@ func TestDecode(t *testing.T) {
 		gzippedBytes = []byte{
 			31, 139, 8, 0, 0, 0, 0, 0, 0, 255, 74, 203, 207, 87, 200, 44, 86, 40, 201, 72, 85,
 			200, 75, 45, 87, 72, 74, 44, 2, 4, 0, 0, 255, 255, 251, 28, 166, 187, 18, 0, 0, 0,
+		}
+		bredBytes = []byte{
+			139, 8, 128, 102, 111, 111, 32, 105, 115, 32, 116,
+			104, 101, 32, 110, 101, 119, 32, 98, 97, 114, 3,
 		}
 		normalBytes = []byte("foo is the new bar")
 	)
@@ -120,11 +129,11 @@ func TestDecode(t *testing.T) {
 			shouldMatch: false,
 		},
 		{
-			desc:        "should NOT support brotli",
-			input:       normalBytes,
+			desc:        "should support brotli",
+			input:       bredBytes,
 			expected:    normalBytes,
 			encoding:    "br",
-			shouldMatch: true,
+			shouldMatch: false,
 		},
 	}
 
@@ -146,6 +155,7 @@ func TestDecode(t *testing.T) {
 			} else {
 				isBad = bytes.Equal(test.input, output)
 			}
+
 			if isBad {
 				t.Errorf("match error got body: %s\n wanted: %s", output, test.input)
 			}
